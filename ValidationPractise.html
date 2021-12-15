@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation practise </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .wrapper{
+            width: 600px;
+            margin: 0 auto;
+        }
+        .error{
+            color:red;
+            font:bold;
+
+        }
+    </style>
+
+</head>    
+<body>
+<div class="container-fluid mt-4">
+        <h2 class="text-center">Form validation using jquery validation plugins</h2>
+
+    <div class="wrapper">
+        <div class="container mt-5">
+    
+            <form method="POST" id="myform" autocomplete="off">
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control"  placeholder="Student name" id="name">
+                    
+                    <br>
+                    
+                    <input type="email" name="email" class="form-control" placeholder="Student email" id="email">
+                    
+                    <br>
+
+                    <input type="password" name="password" class="form-control" placeholder="password" id="password"> 
+                    
+                    <br>
+
+                    <input type="password" name="confirm_pass" class="form-control" placeholder="confirm password" id="confirm_pass"> 
+                    <br>
+
+
+                    <input type="text" name="mobile" class="form-control" placeholder="mobile" id="mobile"> 
+                    
+                    <br>
+
+                    <div class="pull-right">
+                        <button class="btn btn-success" id="submit" type="submit">submit</button>
+                        <a href="index.php" class="btn btn-primary" > cancel </a>
+                    </div>
+                </div>    
+            </form>
+        
+         </div>
+    </div>
+</div>
+
+<!-- JQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"> </script>
+
+<!-- validation plugin CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        jQuery.validator.addMethod("lettersonly", function(value, element) {
+            return this.optional(element) || /^[a-z\s]+$/i.test(value);
+            }, "Only alphabetical characters");
+
+        $("#myform").validate({
+            rules:{
+                name:{
+                    required:true,
+                    lettersonly:true
+                },
+                email:{
+                    required:true,
+                    email:true
+                },
+                password:{
+                    required:true,
+                    minlength:5
+                },
+                confirm_pass:{
+                    required:true,
+                    equalTo: '#password'
+                },
+                mobile:{
+                    required:true,
+                    digits:true,
+                    maxlength:10,
+                    minlength:10
+                }
+            },
+            messages:{
+                name:{
+                    required:"**this is required field",
+                     lettersonly:"invalid username"
+                },
+
+                email:{
+                    required:"**this is required field",
+                    email:"invalid email"
+                },
+
+                password:{
+                    required:"**this is required field",
+                     minlength:"your password must be atleast 5 character"
+
+                },
+                confirm_pass:{
+                    required:"**this is required field",
+                    equalTo:"please enter same password"
+                },
+                mobile:{
+                    required:"**this is required field",
+                    digits:"please enter your correct mobile number",
+                    maxlength:"you entered more than 10 digit",
+                    minlength:"you entered less than 10 digit"
+
+                }
+
+            },
+
+            submitHandler: function(form) {
+                 form.submit();
+            }
+           
+        });
+
+         
+    });
+   
+</script>
+
+</body>
+</html>
